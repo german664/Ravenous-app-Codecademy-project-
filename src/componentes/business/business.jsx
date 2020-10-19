@@ -4,7 +4,7 @@ import "./business.css";
 const Business = (props) => {
   return (
     <>
-      <div className="Business">
+      <div className="Business" key={props.business.id}>
         <div className="image-container">
           <img src={props.business.imageSrc} alt={props.business.name} />
         </div>

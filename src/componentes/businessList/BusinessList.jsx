@@ -6,7 +6,7 @@ const BusinessList = (props) => {
   return (
     <>
       <div className="BusinessList">
-        {props.businesses.map((business) => {
+        {!!props.businesses && props.businesses.length > 0 && props.businesses.map((business) => {
           return <Business business={business} />;
         })}
       </div>

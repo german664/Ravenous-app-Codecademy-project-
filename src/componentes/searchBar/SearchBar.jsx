@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./SearchBar.css";
+import { Yelp } from "../../util/Yelp.js"
+import BusinessList from "../businessList/BusinessList";
 
 const SearchBar = () => {
   const sortByOptions = {
@@ -14,6 +16,7 @@ const SearchBar = () => {
       return "";
     }
   };
+  const [businesses, setBusinesses] = useState([])
 
   const handleSortByChange = (sortByOption) => {
     setState((prevState) => {
@@ -56,13 +59,15 @@ const SearchBar = () => {
     });
   };
   const searchYelp = (term, location, sortBy) => {
-    console.log(`"Searching Yelp with ${sortBy}, ${term}, ${location}"`);
+    Yelp.search(term, location, sortBy).then(business => setBusinesses(business))
   };
   const handleSearch = (e) => {
     searchYelp(state.term, state.location, state.sortBy);
     e.preventDefault();
+
   };
   return (
+    <>
     <div className="SearchBar">
       <div className="SearchBar-sort-options">
         <ul>{renderSortByOptions()}</ul>
@@ -72,9 +77,11 @@ const SearchBar = () => {
         <input placeholder="Where?" onChange={handleLocationChange} />
       </div>
       <div className="SearchBar-submit" onClick={handleSearch}>
-        <a>Let's Go</a>
+        <a href="">Let's Go</a>
       </div>
-    </div>
+      </div>
+      <BusinessList businesses={businesses} />
+      </>
   );
 };
 
